@@ -1,3 +1,4 @@
+import { Link } from "expo-router";
 import { useEffect, useState } from "react";
 import {
 	Text,
@@ -17,22 +18,10 @@ export default function Index() {
 	const [referenceInput,setReferenceInput] = useState('');
 	const [imagemSorteada , setImagemSorteada] = useState(0);
 	const [sorteados ,setSorteados] = useState([0]);
+	const [tentativas,setTentativas] = useState(0);
 
-	function sortearImagem(){
-		var numero = Math.floor(Math.random() * 6)
-		sorteados.forEach(index => {
-			
-			
-			
-			
-			
-		});
-		setImagemSorteada(numero)
-		console.log(imagemSorteada)
-		return
-	}
-
-
+	
+	
 	
 	const [imagens] = useState([
 		{
@@ -66,9 +55,27 @@ export default function Index() {
 			link: require('./src/imagens/subsologaragem.jpg')
 		}
 	]);
-
 	
+	function sortearImagem(){
+		var numero
+		do{
+			numero = Math.floor(Math.random() * 6)
+			if(sorteados.length == imagens.length){
+				console.log("cabou as imagnes")
+				window.location.href = `/cadastro?tentativas=${tentativas}`
+				return
+			}
 
+		}while (sorteados.includes(numero))
+		
+			
+		sorteados.push(numero)
+		setImagemSorteada(numero)
+		console.log(imagemSorteada)
+		return
+	}
+	
+	
 	function validarTentativa(){
 		if(floorInput.toLocaleLowerCase() == imagens[imagemSorteada].andar && referenceInput.toLocaleLowerCase() == imagens[imagemSorteada].referencia){
 			alert("vc acertou")
@@ -76,6 +83,7 @@ export default function Index() {
 			return
 		}
 		alert("voce errou")
+		setTentativas(tentativas +1)
 
 
 	}
