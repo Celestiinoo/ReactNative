@@ -67,7 +67,7 @@ export default function Index() {
 		do{
 			numero = Math.floor(Math.random() * imagens.length)
 			if(sorteados.length == imagens.length){
-				window.location.href = `/cadastro?tentativas=${tentativas}&&acertos=${acertos}`
+				window.location.href = `/final?tentativas=${tentativas}&&acertos=${acertos}`
 				return
 			}
 
